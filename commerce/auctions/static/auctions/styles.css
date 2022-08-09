@@ -1,0 +1,16 @@
+main {
+    padding: 20px;
+}
+
+.info {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+ .footer {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: -25px;
+ }
+

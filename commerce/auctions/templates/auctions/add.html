@@ -1,0 +1,45 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}Create a Listing{% endblock %}
+
+{% block body %}
+<h2>New Listing</h2>
+<br>
+<form action="{% url 'add' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="Listing Title">Listing Title</label>
+        <input type="Username" class="form-control" id="exampleInputUsername1" aria-describedby="emailHelp" placeholder="Listing Title" name="title">
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="category">Listing Category</label>
+        <select class="form-select" name="category">
+            <option disabled selected value>Select a Category</option>
+        {% for category in categories%}
+            <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <br>
+    <label for="category">Starting Bid</label>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input class="form-control" name="starting_bid" type="number" min="0.01" step="0.01" placeholder="Starting Bid"/>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Listing Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" name="description" placeholder="Sample Text"></textarea>
+    </div>
+    <br>
+    <label for="image_url">Listing Image</label>
+    <div class="form-group">
+        <input class="form-control" placeholder="Image URL" name="image_url" type="url">
+    </div>
+    <br>
+    <input class="btn btn-secondary" type="submit" value="Create Listing" style="background-color: #1EBBA5">  
+</form>
+{% endblock %}

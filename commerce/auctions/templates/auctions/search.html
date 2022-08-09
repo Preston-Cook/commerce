@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block title %} Search Results {% endblock %}
+
+{% block body %}
+<h2>Search Results</h2>
+<hr>
+<h5>Showing {{ results | length }} Result(s) for "{{ query }}"</h5>
+<br>
+<div class="border border-secondary info">
+{% for listing in results %}
+        <a style="text-decoration: none; color: black;" href="{% url 'listing' listing_id=listing.id%}">
+            <p class="fs-5"><b>Listing Title: </b>{{ listing.title }}</p>
+            <h6 class="card-text"><b>Current Bid: </b>${{ listing.price.current_bid }}</h6>
+            <div class="border border-secondary rounded">
+                <img class="img-fluid" src="{{ listing.image_url }}" style="height: 500px;">
+            </div>
+            <p class="card-text">{{ listing.price.num_bids }} bids(s)</p>
+            <p class="card-text"><small class="text-muted">Created on {{ listing.listing_date }} by {{ listing.seller.username }}</small></p>
+        </a>
+        <hr>
+{% empty %}
+    <p class="fs-5">No results...</p>
+    <div class="border border-secondary rounded">
+        <img class="img-fluid" src="{% static 'auctions/images/sad_cat.jpg' %}">
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

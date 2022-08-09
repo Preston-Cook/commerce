@@ -1,0 +1,68 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %} My Account {% endblock %}
+
+{% block body %}
+    <h2>My Account</h2>
+    <br>
+    <h4>Personal Information</h4>
+    <div class="border border-secondary info">
+        <p class="fs-5"><b>Username:</b> {{ user.username }}</p>
+        <p class="fs-5"><b>Date Joined:</b> {{ date }}</p>
+    </div>
+    <br>
+    <h4>My Watchlist</h4>
+    <div class="border border-secondary info">
+        {% for listing in watchlist %}
+        <a style="text-decoration: none; color: black;" href="{% url 'listing' listing_id=listing.id%}">
+            <p class="fs-5"><b>Listing Title: </b>{{ listing.title }}</p>
+            <h6 class="card-text"><b>Current Bid: </b>${{ listing.price.current_bid }}</h6>
+            <div class="border border-secondary rounded">
+                <img class="img-fluid" src="{{ listing.image_url }}">
+            </div>
+            <p class="card-text">{{ listing.price.num_bids }} bids(s)</p>
+            <p class="card-text"><small class="text-muted">Created on {{ listing.listing_date }} by {{ listing.seller.username }}</small></p>
+        </a>
+        <hr>
+        {% empty %}
+        <h5>You are not Watching any Listings</h5>
+        {% endfor %}
+    </div>
+    <br>
+    <h4>My Active Listings</h4>
+        <div class="border border-secondary info">
+        {% for listing in active_listings %}
+            <a style="text-decoration: none; color: black;" href="{% url 'listing' listing_id=listing.id%}">
+                <p class="fs-5"><b>Listing Title: </b>{{ listing.title }}</p>
+                <h6 class="card-text"><b>Current Bid: </b>${{ listing.price.current_bid }}</h6>
+                <div class="border border-secondary rounded">
+                    <img class="img-fluid" src="{{ listing.image_url }}">
+                </div>
+                <p class="card-text">{{ listing.price.num_bids }} bids(s)</p>
+                <p class="card-text"><small class="text-muted">Created on {{ listing.listing_date }}</small></p>
+            </a>
+            <hr>
+        {% empty %}
+        <h5>You do not have any Active Listings</h5>
+        {% endfor %}
+        </div>
+    <br>
+    <h4 style="color: black;">My Closed Listings</h4>
+        <div class="border border-secondary info">
+            {% for listing in closed_listings %}
+            <a style="text-decoration: none; color: black;" href="{% url 'listing' listing_id=listing.id%}">
+                <p class="fs-5"><b>Listing Title: </b>{{ listing.title }}</p>
+                <h6 class="card-text"><b>Closing Price: </b>${{ listing.price.current_bid }}</h6>
+                <div class="border border-secondary rounded">
+                    <img class="img-fluid" src="{{ listing.image_url }}">
+                </div>
+                <p class="card-text">{{ listing.price.num_bids }} bids(s)</p>
+                <h6 class="card-text"><b>Winner: </b>{{ listing.price.highest_bidder.username }}</h6>
+                <p class="card-text"><small class="text-muted">Created on {{ listing.listing_date }}</p>
+            </a>
+            <hr>
+        {% empty %}
+        <h5>You do not have nay Closed Listings</h5>
+        {% endfor %}
+        </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <hr>
+    {% for listing in listings %}
+    <a style="text-decoration: none; color: black;" href="{% url 'listing' listing_id=listing.id %}">
+      <div class="card mb-3" style="width: 30%;">
+        <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ listing.title }}</h5>
+          <h6 class="card-text"><strong>${{ listing.price.current_bid }}</strong></h6>
+          <p class="card-text">{{ listing.price.num_bids }} bids(s)</p>
+          <p class="card-text"><small class="text-muted">Created on {{ listing.listing_date }} by {{ listing.seller.username }}</small></p>
+        </div>
+      </div>
+    </a>
+    {% empty %}
+    <div class="card mb-3" style="width: 50%;">
+      <img class="card-img-top" src="{% static 'auctions/images/sad_cat.jpg' %}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">There are No Active Listings</h5>
+      </div>
+    </div>
+    {% endfor %}
+{% endblock %}
